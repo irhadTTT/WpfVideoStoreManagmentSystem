@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="VideotekaModelStoreContainer" CdmEntityContainer="VideotekaEntities">
+    <EntitySetMapping Name="Clans">
+      <EntityTypeMapping TypeName="VideotekaModel.Clan">
+        <MappingFragment StoreEntitySet="Clan">
+          <ScalarProperty Name="ClanID" ColumnName="ClanID" />
+          <ScalarProperty Name="Ime" ColumnName="Ime" />
+          <ScalarProperty Name="Prezime" ColumnName="Prezime" />
+          <ScalarProperty Name="JMBG" ColumnName="JMBG" />
+          <ScalarProperty Name="Adresa" ColumnName="Adresa" />
+          <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Films">
+      <EntityTypeMapping TypeName="VideotekaModel.Film">
+        <MappingFragment StoreEntitySet="Film">
+          <ScalarProperty Name="FilmId" ColumnName="FilmId" />
+          <ScalarProperty Name="NazivFilma" ColumnName="NazivFilma" />
+          <ScalarProperty Name="Trajanje" ColumnName="Trajanje" />
+          <ScalarProperty Name="Zanr" ColumnName="Zanr" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Iznajmljivanjes">
+      <EntityTypeMapping TypeName="VideotekaModel.Iznajmljivanje">
+        <MappingFragment StoreEntitySet="Iznajmljivanje">
+          <ScalarProperty Name="IznajmljivanjeID" ColumnName="IznajmljivanjeID" />
+          <ScalarProperty Name="FilmId" ColumnName="FilmId" />
+          <ScalarProperty Name="ClanID" ColumnName="ClanID" />
+          <ScalarProperty Name="DatumIznajmljivanja" ColumnName="DatumIznajmljivanja" />
+          <ScalarProperty Name="DatumVracanja" ColumnName="DatumVracanja" />
+          <ScalarProperty Name="Cijena" ColumnName="Cijena" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="PrikaziIznajmljivanja" FunctionName="VideotekaModel.Store.PrikaziIznajmljivanja">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="VideotekaModel.PrikaziIznajmljivanja_Result">
+          <ScalarProperty Name="IznajmljivanjeID" ColumnName="IznajmljivanjeID" />
+          <ScalarProperty Name="DatumIznajmljivanja" ColumnName="DatumIznajmljivanja" />
+          <ScalarProperty Name="DatumVracanja" ColumnName="DatumVracanja" />
+          <ScalarProperty Name="Cijena" ColumnName="Cijena" />
+          <ScalarProperty Name="NazivFilma" ColumnName="NazivFilma" />
+          <ScalarProperty Name="Ime" ColumnName="Ime" />
+          <ScalarProperty Name="Prezime" ColumnName="Prezime" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="VideotekaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Clan">
+    <Key>
+      <PropertyRef Name="ClanID" />
+    </Key>
+    <Property Name="ClanID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Ime" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Prezime" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="JMBG" Type="String" MaxLength="13" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Adresa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Telefon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Iznajmljivanjes" Relationship="Self.FK__Iznajmlji__ClanI__164452B1" FromRole="Clan" ToRole="Iznajmljivanje" />
+  </EntityType>
+  <EntityType Name="Film">
+    <Key>
+      <PropertyRef Name="FilmId" />
+    </Key>
+    <Property Name="FilmId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NazivFilma" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Trajanje" Type="Int32" Nullable="false" />
+    <Property Name="Zanr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Iznajmljivanjes" Relationship="Self.FK__Iznajmlji__FilmI__15502E78" FromRole="Film" ToRole="Iznajmljivanje" />
+  </EntityType>
+  <EntityType Name="Iznajmljivanje">
+    <Key>
+      <PropertyRef Name="IznajmljivanjeID" />
+    </Key>
+    <Property Name="IznajmljivanjeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FilmId" Type="Int32" Nullable="false" />
+    <Property Name="ClanID" Type="Int32" Nullable="false" />
+    <Property Name="DatumIznajmljivanja" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DatumVracanja" Type="DateTime" Precision="3" />
+    <Property Name="Cijena" Type="Decimal" Precision="18" Scale="2" />
+    <NavigationProperty Name="Clan" Relationship="Self.FK__Iznajmlji__ClanI__164452B1" FromRole="Iznajmljivanje" ToRole="Clan" />
+    <NavigationProperty Name="Film" Relationship="Self.FK__Iznajmlji__FilmI__15502E78" FromRole="Iznajmljivanje" ToRole="Film" />
+  </EntityType>
+  <Association Name="FK__Iznajmlji__ClanI__164452B1">
+    <End Role="Clan" Type="Self.Clan" Multiplicity="1" />
+    <End Role="Iznajmljivanje" Type="Self.Iznajmljivanje" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Clan">
+        <PropertyRef Name="ClanID" />
+      </Principal>
+      <Dependent Role="Iznajmljivanje">
+        <PropertyRef Name="ClanID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Iznajmlji__FilmI__15502E78">
+    <End Role="Film" Type="Self.Film" Multiplicity="1" />
+    <End Role="Iznajmljivanje" Type="Self.Iznajmljivanje" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Film">
+        <PropertyRef Name="FilmId" />
+      </Principal>
+      <Dependent Role="Iznajmljivanje">
+        <PropertyRef Name="FilmId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="VideotekaEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Clans" EntityType="Self.Clan" />
+    <EntitySet Name="Films" EntityType="Self.Film" />
+    <EntitySet Name="Iznajmljivanjes" EntityType="Self.Iznajmljivanje" />
+    <AssociationSet Name="FK__Iznajmlji__ClanI__164452B1" Association="Self.FK__Iznajmlji__ClanI__164452B1">
+      <End Role="Clan" EntitySet="Clans" />
+      <End Role="Iznajmljivanje" EntitySet="Iznajmljivanjes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Iznajmlji__FilmI__15502E78" Association="Self.FK__Iznajmlji__FilmI__15502E78">
+      <End Role="Film" EntitySet="Films" />
+      <End Role="Iznajmljivanje" EntitySet="Iznajmljivanjes" />
+    </AssociationSet>
+    <FunctionImport Name="PrikaziIznajmljivanja" ReturnType="Collection(VideotekaModel.PrikaziIznajmljivanja_Result)" />
+  </EntityContainer>
+  <ComplexType Name="PrikaziIznajmljivanja_Result">
+    <Property Type="Int32" Name="IznajmljivanjeID" Nullable="false" />
+    <Property Type="DateTime" Name="DatumIznajmljivanja" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="DatumVracanja" Nullable="true" Precision="23" />
+    <Property Type="Decimal" Name="Cijena" Nullable="true" Precision="18" Scale="2" />
+    <Property Type="String" Name="NazivFilma" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Ime" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Prezime" Nullable="false" MaxLength="50" />
+  </ComplexType>
+</Schema>
